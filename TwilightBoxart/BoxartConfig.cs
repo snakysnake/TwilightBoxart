@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using KirovAir.Core.Config;
-using SixLabors.Primitives;
+using SixLabors.ImageSharp;
 using TwilightBoxart.Models.Base;
 
 namespace TwilightBoxart
@@ -18,7 +18,7 @@ namespace TwilightBoxart
         public const string MagicDir = "_nds";
         public const string FileName = "TwilightBoxart.ini";
         public static string Credits = "TwilightBoxart - Created by KirovAir." + Environment.NewLine + "Loads of love to the devs of TwilightMenu++, LibRetro, GameTDB and the maintainers of the No-Intro DB.";
-        
+
         public void Load()
         {
             Load(FileName);
@@ -105,7 +105,7 @@ namespace TwilightBoxart
             {ConsoleType.GameBoy, new Size(1, 1)},
             {ConsoleType.GameBoyColor, new Size(1, 1)},
             {ConsoleType.GameBoyAdvance, new Size(1, 1)},
- 
+
             // NES / GEN/MD / SFC / MS/ GG
             {ConsoleType.NintendoEntertainmentSystem, new Size(84, 115)},
             {ConsoleType.SegaGenesis, new Size(84, 115)},

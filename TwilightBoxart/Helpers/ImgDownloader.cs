@@ -1,13 +1,10 @@
 ﻿using System.IO;
 using System.Net;
+using System.Net.Http;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Formats.Gif;
-using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
-using SixLabors.Primitives;
 
 namespace TwilightBoxart.Helpers
 {
@@ -22,66 +19,47 @@ namespace TwilightBoxart.Helpers
             _height = height;
         }
 
-        public void DownloadAndResize(string url, string targetFile)
+        public async void DownloadAndResize(string url, string targetFile)
         {
-            using (var webClient = new WebClient())
+            HttpClient client = new();
+            HttpRequestMessage request = new(HttpMethod.Get, url);
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                var data = webClient.DownloadData(url);
-                var decoder = GetDecoder(url);
+                Stream data = await response.Content.ReadAsStreamAsync();
 
-                using (var image = decoder == null ? Image.Load(data) : Image.Load(data, decoder))
-                {
-                    image.Metadata.ExifProfile = null;
+                var image = Image.Load(data);
+                image.Metadata.ExifProfile = null;
 
-                    image.Mutate(x => x.Resize(_width, _height));
+                image.Mutate(x => x.Resize(_width, _height));
 
-                    var encoder = GetEncoder(image, targetFile);
-                    image.Save(targetFile, encoder);
-                }
+                var encoder = GetEncoder(image, targetFile);
+                image.Save(targetFile, encoder);
             }
         }
 
-        private IImageDecoder GetDecoder(string sourceFile)
-        {
-            var ext = Path.GetExtension(sourceFile)?.ToLower();
-
-            switch (ext)
-            {
-                case ".png":
-                    return new PngDecoder { IgnoreMetadata = true };
-                case ".jpg":
-                case ".jpeg":
-                    return new JpegDecoder { IgnoreMetadata = true };
-                case ".gif":
-                    return new GifDecoder { IgnoreMetadata = true };
-                default:
-                    return null;
-            }
-        }
-
-        private IImageEncoder GetEncoder(Image image, string targetFile)
+        private static IImageEncoder GetEncoder(Image image, string targetFile)
         {
             var ext = Path.GetExtension(targetFile);
-            var manager = image.GetConfiguration().ImageFormatsManager;
-            var format = manager.FindFormatByFileExtension(ext);
-            var encoder = manager.FindEncoder(format);
+            var manager = image.Configuration.ImageFormatsManager;
+            manager.TryFindFormatByFileExtension(ext, out IImageFormat format);
+            var encoder = manager.GetEncoder(format);
 
-            if (encoder is PngEncoder pngEncoder)
+            if (encoder is PngEncoder)
             {
-                SetPngSettings(pngEncoder);
+                return new PngEncoder
+                {
+                    CompressionLevel = PngCompressionLevel.Level9,
+                    InterlaceMethod = PngInterlaceMode.None,
+                    BitDepth = PngBitDepth.Bit8,
+                    ColorType = PngColorType.Rgb,
+                    FilterMethod = PngFilterMethod.Adaptive,
+                };
             }
 
             return encoder;
         }
 
-        private void SetPngSettings(PngEncoder encoder)
-        {
-            encoder.CompressionLevel = 9;
-            encoder.InterlaceMethod = PngInterlaceMode.None;
-            encoder.BitDepth = PngBitDepth.Bit8;
-            encoder.ColorType = PngColorType.Rgb;
-            encoder.FilterMethod = PngFilterMethod.Adaptive;
-        }
 
         public void SetSizeAdjustedToAspectRatio(Size aspectRatio)
         {
