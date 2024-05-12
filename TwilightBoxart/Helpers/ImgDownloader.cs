@@ -10,6 +10,8 @@ namespace TwilightBoxart.Helpers
 {
     public class ImgDownloader
     {
+        private static readonly HttpClient Client = new();
+
         private int _width;
         private int _height;
 
@@ -21,16 +23,13 @@ namespace TwilightBoxart.Helpers
 
         public async void DownloadAndResize(string url, string targetFile)
         {
-            HttpClient client = new();
-            HttpRequestMessage request = new(HttpMethod.Get, url);
-            HttpResponseMessage response = await client.SendAsync(request);
+            HttpResponseMessage response = await Client.GetAsync(url);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 Stream data = await response.Content.ReadAsStreamAsync();
 
                 var image = Image.Load(data);
                 image.Metadata.ExifProfile = null;
-
                 image.Mutate(x => x.Resize(_width, _height));
 
                 var encoder = GetEncoder(image, targetFile);
