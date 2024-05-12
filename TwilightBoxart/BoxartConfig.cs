@@ -33,14 +33,15 @@ namespace TwilightBoxart
 
             if (!BoxartPath.StartsWith("{sdroot}"))
             {
-                return BoxartPath;
+                var split = BoxartPath.Split(['/', '\\']);
+                return Path.Combine(split);
             }
 
-            if (root.Contains(Path.DirectorySeparatorChar.ToString()))
+            if (root.Contains('/') || root.Contains('\\'))
             {
                 try
                 {
-                    var split = root.Split(Path.DirectorySeparatorChar);
+                    var split = root.Split(['/', '\\']);
                     var tmpReplace = "";
                     for (var i = split.Length; i-- > 0;)
                     {
@@ -63,7 +64,7 @@ namespace TwilightBoxart
                 catch { }
             }
 
-            return Path.Combine(root.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar, BoxartPath.Replace("{sdroot}", "").TrimStart(Path.DirectorySeparatorChar));
+            return Path.Combine(root.TrimEnd(Path.DirectorySeparatorChar), BoxartPathNormalized().Replace("{sdroot}", "").TrimStart(Path.DirectorySeparatorChar));
         }
 
         // Used as backup mapping.
@@ -120,5 +121,14 @@ namespace TwilightBoxart
         {
             {ConsoleType.NintendoEntertainmentSystem, "https://github.com/libretro/libretro-database/raw/master/dat/Nintendo%20-%20Nintendo%20Entertainment%20System.dat"}
         };
+
+
+        private String BoxartPathNormalized()
+        {
+            var split = this.BoxartPath.Split(['/', '\\']);
+            var BoxartPath = Path.Combine(split);
+
+            return BoxartPath;
+        }
     }
 }
