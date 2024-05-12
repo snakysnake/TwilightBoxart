@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using KirovAir.Core.Extensions;
 using KirovAir.Core.Utilities;
 
@@ -10,18 +11,18 @@ namespace TwilightBoxart.Models.Base
         /// Used for 'simple' name or sha1 mapping only.
         /// </summary>
         /// <param name="targetFile"></param>
-        public override void DownloadBoxArt(string targetFile)
+        public override async void DownloadBoxArt(string targetFile)
         {
             if (string.IsNullOrEmpty(NoIntroName))
             {
-                DownloadByName(targetFile);
+                await DownloadByName(targetFile);
                 return;
             }
 
             try
             {
                 // Try NoIntroName first.
-                DownloadWithRetry(NoIntroName, targetFile);
+                await DownloadWithRetry(NoIntroName, targetFile);
             }
             catch
             {
@@ -30,15 +31,15 @@ namespace TwilightBoxart.Models.Base
                     throw new NoMatchException("Nothing was found! (Using sha1/filename)");
                 }
                 // Else try filename.
-                DownloadByName(targetFile);
+                await DownloadByName(targetFile);
             }
         }
 
-        private void DownloadByName(string targetFile)
+        private async Task DownloadByName(string targetFile)
         {
             try
             {
-                DownloadWithRetry(SearchName, targetFile);
+                await DownloadWithRetry(SearchName, targetFile);
             }
             catch
             {
@@ -46,7 +47,7 @@ namespace TwilightBoxart.Models.Base
             }
         }
 
-        private void DownloadWithRetry(string name, string targetFile)
+        private async Task DownloadWithRetry(string name, string targetFile)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -55,18 +56,18 @@ namespace TwilightBoxart.Models.Base
 
             try
             {
-                Download(ConsoleType, name, targetFile);
+                await Download(ConsoleType, name, targetFile);
             }
             catch (Exception e)
             {
                 if (NoIntroConsoleType == ConsoleType.Unknown || ConsoleType == NoIntroConsoleType) throw;
 
                 // Try again on NoIntroDb ConsoleType if found.
-                Download(NoIntroConsoleType, name, targetFile);
+                await Download(NoIntroConsoleType, name, targetFile);
             }
         }
 
-        private void Download(ConsoleType consoleType, string name, string targetFile)
+        private async Task Download(ConsoleType consoleType, string name, string targetFile)
         {
             // We can generate the LibRetro content url based on the NoIntroDb name.
             var consoleStr = consoleType.GetDescription().Replace(" ", "_");
@@ -86,7 +87,7 @@ namespace TwilightBoxart.Models.Base
             name = name.Replace("|", "_");
 
             url = FileHelper.CombineUri(url, $"{name}.png");
-            ImgDownloader.DownloadAndResize(url, targetFile);
+            await ImgDownloader.DownloadAndResize(url, targetFile);
         }
     }
 }

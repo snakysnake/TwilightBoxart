@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Png;
@@ -21,7 +22,7 @@ namespace TwilightBoxart.Helpers
             _height = height;
         }
 
-        public async void DownloadAndResize(string url, string targetFile)
+        public async Task DownloadAndResize(string url, string targetFile)
         {
             HttpResponseMessage response = await Client.GetAsync(url);
             if (response.StatusCode == HttpStatusCode.OK)

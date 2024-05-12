@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace TwilightBoxart.Crawlers.LibRetro
 {
     public static class LibRetroDat
     {
-        public static List<LibRetroRomData> DownloadDat(string url)
+        private static readonly HttpClient Client = new();
+        public static async Task<List<LibRetroRomData>> DownloadDat(string url)
         {
-            using (var wc = new WebClient())
-            {
-                var data = wc.DownloadString(url);
-                return ParseDat<LibRetroRomData>(data, "game");
-            }
+            HttpResponseMessage response = await Client.GetAsync(url);
+
+            string data = await response.Content.ReadAsStringAsync();
+            return ParseDat<LibRetroRomData>(data, "game");
         }
 
         /// <summary>
         /// Parses a libretro .dat file. The code is horrible and so is the format ..
-        /// y no standards libretro? 
+        /// y no standards libretro?
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="data"></param>

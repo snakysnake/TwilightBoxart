@@ -79,7 +79,7 @@ namespace TwilightBoxart.Data
 
                     progress?.Report($"Found {data.Game.Count} roms");
                 }
-                
+
                 progress?.Report("Downloading extra LibRetro data..");
 
                 foreach (var map in BoxartConfig.LibRetroDatUrls)
@@ -87,7 +87,7 @@ namespace TwilightBoxart.Data
                     progress?.Report($"{map.Key.GetDescription()}.. ");
 
                     List<LibRetroRomData> data = null;
-                    _retryHelper.RetryOnException(() => { data = LibRetroDat.DownloadDat(map.Value); });
+                    _retryHelper.RetryOnException(async () => { data = await LibRetroDat.DownloadDat(map.Value); });
 
                     foreach (var game in data)
                     {
