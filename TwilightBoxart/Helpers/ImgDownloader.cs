@@ -9,18 +9,12 @@ using SixLabors.ImageSharp.Processing;
 
 namespace TwilightBoxart.Helpers
 {
-    public class ImgDownloader
+    public class ImgDownloader(int width, int height)
     {
         private static readonly HttpClient Client = new();
 
-        private int _width;
-        private int _height;
-
-        public ImgDownloader(int width, int height)
-        {
-            _width = width;
-            _height = height;
-        }
+        private int _width = width;
+        private int _height = height;
 
         public async Task DownloadAndResize(string url, string targetFile)
         {

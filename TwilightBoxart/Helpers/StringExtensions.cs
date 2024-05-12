@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace KirovAir.Core.Extensions
 {
@@ -8,7 +9,7 @@ namespace KirovAir.Core.Extensions
         {
             if (addDots)
                 maxChars -= 2;
-            return value.Length <= maxChars ? value : value.Substring(0, maxChars) + (addDots ? ".." : "");
+            return value.Length <= maxChars ? value : string.Concat(value.AsSpan(0, maxChars), addDots ? ".." : "");
         }
 
         public static string UpperToSpace(this string value)

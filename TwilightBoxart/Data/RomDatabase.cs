@@ -11,16 +11,11 @@ using Utf8Json;
 
 namespace TwilightBoxart.Data
 {
-    public class RomDatabase
+    public class RomDatabase(string databasePath)
     {
-        private readonly string _databasePath;
-        private List<RomMetaData> _roms = new List<RomMetaData>();
-        private readonly RetryHelper _retryHelper = new RetryHelper(TimeSpan.FromSeconds(3));
-
-        public RomDatabase(string databasePath)
-        {
-            _databasePath = databasePath;
-        }
+        private readonly string _databasePath = databasePath;
+        private List<RomMetaData> _roms = [];
+        private readonly RetryHelper _retryHelper = new(TimeSpan.FromSeconds(3));
 
         public void Initialize(IProgress<string> progress = null)
         {
@@ -28,10 +23,8 @@ namespace TwilightBoxart.Data
             {
                 try
                 {
-                    using (var compressed = File.OpenRead(_databasePath))
-                    {
-                        _roms = JsonSerializer.Deserialize<List<RomMetaData>>(FileHelper.Decompress(compressed));
-                    }
+                    using var compressed = File.OpenRead(_databasePath);
+                    _roms = JsonSerializer.Deserialize<List<RomMetaData>>(FileHelper.Decompress(compressed));
                 }
                 catch (Exception e)
                 {
@@ -42,7 +35,7 @@ namespace TwilightBoxart.Data
             if (_roms == null || _roms.Count == 0)
             {
                 progress?.Report("No valid database was found! Downloading No-Intro DB..");
-                _roms = new List<RomMetaData>();
+                _roms = [];
 
                 foreach (var consoleType in (ConsoleType[])Enum.GetValues(typeof(ConsoleType)))
                 {
@@ -123,15 +116,17 @@ namespace TwilightBoxart.Data
             RomMetaData result = null;
             if (!string.IsNullOrEmpty(rom.Sha1))
             {
-                result = _roms.FirstOrDefault(c => c.Sha1.ToLower() == rom.Sha1.ToLower());
+                result = _roms.FirstOrDefault(c => c.Sha1.Equals(rom.Sha1, StringComparison.OrdinalIgnoreCase));
             }
 
             if (result == null && !string.IsNullOrEmpty(rom.TitleId))
             {
                 var results =
                  _roms.Where(c => c.ConsoleType == rom.ConsoleType &&
-                                                                      (c.Serial?.ToLower() == rom.TitleId.ToLower()
-                                                                       || c.TitleId?.ToLower() == rom.TitleId.ToLower())).ToList();
+                                (
+                                    (c.Serial?.Equals(rom.TitleId, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                                    (c.TitleId?.Equals(rom.TitleId, StringComparison.OrdinalIgnoreCase) ?? false)
+                                )).ToList();
 
                 // Do logic to fix dupes.. Todo: make this actually solid but for now we filter bad dumps.
                 if (results.Count > 1)

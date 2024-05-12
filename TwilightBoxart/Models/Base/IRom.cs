@@ -1,4 +1,5 @@
-﻿using TwilightBoxart.Helpers;
+﻿using System.Threading.Tasks;
+using TwilightBoxart.Helpers;
 
 namespace TwilightBoxart.Models.Base
 {
@@ -12,7 +13,7 @@ namespace TwilightBoxart.Models.Base
         ConsoleType ConsoleType { get; set; }
         string NoIntroName { get; set; }
         ConsoleType NoIntroConsoleType { get; set; }
-        void DownloadBoxArt(string targetFile);
+        Task DownloadBoxArt(string targetFile);
         void SetDownloader(ImgDownloader downloader);
     }
 }

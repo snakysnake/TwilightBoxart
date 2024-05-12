@@ -12,13 +12,13 @@ namespace KirovAir.Core.Config
             var currentSection = "";
             foreach (var line in lines)
             {
-                if (line.StartsWith("[") && line.EndsWith("]"))
+                if (line.StartsWith('[') && line.EndsWith(']'))
                 {
                     currentSection = line.TrimStart('[').TrimEnd(']');
                 }
 
                 // Ignore comments
-                if (line.StartsWith(";") || line.StartsWith("/") || !line.Contains("="))
+                if (line.StartsWith(';') || line.StartsWith('/') || !line.Contains('='))
                     continue;
 
                 var s = line.Split('=');

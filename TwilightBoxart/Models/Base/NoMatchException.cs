@@ -2,11 +2,7 @@
 
 namespace TwilightBoxart.Models.Base
 {
-    public class NoMatchException : Exception
+    public class NoMatchException(string message) : Exception(message)
     {
-        public NoMatchException(string message)
-            : base(message)
-        {
-        }
     }
 }

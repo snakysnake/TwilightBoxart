@@ -10,7 +10,7 @@ namespace KirovAir.Core.Extensions
             var type = enumVal.GetType();
             if (!type.IsEnum)
             {
-                throw new ArgumentException("EnumerationValue must be of Enum type", "enumVal");
+                throw new ArgumentException("EnumerationValue must be of Enum type", nameof(enumVal));
             }
 
             //Tries to find a DescriptionAttribute for a potential friendly name
@@ -44,8 +44,8 @@ namespace KirovAir.Core.Extensions
                 {
                     var field = enumType.GetField(enumValue.ToString());
 
-                    if (!(Attribute.GetCustomAttribute(field,
-                            typeof(DescriptionAttribute)) is DescriptionAttribute attr) || !attr.Description.Equals(value)) continue;
+                    if (Attribute.GetCustomAttribute(field,
+                            typeof(DescriptionAttribute)) is not DescriptionAttribute attr || !attr.Description.Equals(value)) continue;
 
                     theEnum = enumValue;
                     found = true;

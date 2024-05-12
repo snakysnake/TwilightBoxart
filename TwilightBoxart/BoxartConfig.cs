@@ -68,7 +68,7 @@ namespace TwilightBoxart
         }
 
         // Used as backup mapping.
-        public static readonly Dictionary<string, ConsoleType> ExtensionMapping = new Dictionary<string, ConsoleType>
+        public static readonly Dictionary<string, ConsoleType> ExtensionMapping = new()
         {
             {".nes", ConsoleType.NintendoEntertainmentSystem},
             {".sfc", ConsoleType.SuperNintendoEntertainmentSystem},
@@ -91,7 +91,7 @@ namespace TwilightBoxart
         /// <summary>
         /// Mapping to merge some ConsoleTypes in the DB.
         /// </summary>
-        public static Dictionary<ConsoleType, ConsoleType> NoIntroDbMapping = new Dictionary<ConsoleType, ConsoleType>
+        public static Dictionary<ConsoleType, ConsoleType> NoIntroDbMapping = new()
         {
             {ConsoleType.NintendoDS, ConsoleType.NintendoDS},
             {ConsoleType.NintendoDSDownloadPlay, ConsoleType.NintendoDS},
@@ -99,7 +99,7 @@ namespace TwilightBoxart
             {ConsoleType.NintendoDSiDigital, ConsoleType.NintendoDSi}
         };
 
-        public static Dictionary<ConsoleType, Size> AspectRatioMapping = new Dictionary<ConsoleType, Size>
+        public static Dictionary<ConsoleType, Size> AspectRatioMapping = new()
         {
             // FDS / GBC / GB
             {ConsoleType.FamicomDiskSystem, new Size(1, 1)},
@@ -117,7 +117,7 @@ namespace TwilightBoxart
             {ConsoleType.SuperNintendoEntertainmentSystem, new Size(158, 115)}
         };
 
-        public static Dictionary<ConsoleType, string> LibRetroDatUrls = new Dictionary<ConsoleType, string>
+        public static Dictionary<ConsoleType, string> LibRetroDatUrls = new()
         {
             {ConsoleType.NintendoEntertainmentSystem, "https://github.com/libretro/libretro-database/raw/master/dat/Nintendo%20-%20Nintendo%20Entertainment%20System.dat"}
         };

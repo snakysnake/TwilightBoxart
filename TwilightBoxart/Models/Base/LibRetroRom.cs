@@ -11,7 +11,7 @@ namespace TwilightBoxart.Models.Base
         /// Used for 'simple' name or sha1 mapping only.
         /// </summary>
         /// <param name="targetFile"></param>
-        public override async void DownloadBoxArt(string targetFile)
+        public override async Task DownloadBoxArt(string targetFile)
         {
             if (string.IsNullOrEmpty(NoIntroName))
             {
@@ -58,7 +58,7 @@ namespace TwilightBoxart.Models.Base
             {
                 await Download(ConsoleType, name, targetFile);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 if (NoIntroConsoleType == ConsoleType.Unknown || ConsoleType == NoIntroConsoleType) throw;
 

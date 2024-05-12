@@ -1,5 +1,6 @@
 ﻿using KirovAir.Core.Extensions;
 using System;
+using System.Threading.Tasks;
 using TwilightBoxart.Models.Base;
 
 namespace TwilightBoxart.Models
@@ -16,20 +17,20 @@ namespace TwilightBoxart.Models
             RegionId = (char)header[15];
         }
 
-        public override void DownloadBoxArt(string targetFile)
+        public override async Task DownloadBoxArt(string targetFile)
         {
             try
             {
                 var region = GetUrlRegion(); // Try correct region
                 try
                 {
-                    DownloadAndResize(region, targetFile);
+                    await DownloadAndResize(region, targetFile);
                 }
                 catch (Exception e)
                 {
                     if (region != "EN" && e.Message.Contains("404")) // Finally, try EN region.
                     {
-                        DownloadAndResize("EN", targetFile);
+                        await DownloadAndResize("EN", targetFile);
                         return;
                     }
 
@@ -38,13 +39,13 @@ namespace TwilightBoxart.Models
             }
             catch
             {
-                base.DownloadBoxArt(targetFile);
+                await base.DownloadBoxArt(targetFile);
             }
         }
 
-        private static readonly string[] Qualities = { "HQ", "M", "S" };
-        private static readonly string[] Extensions = { "jpg", "jpg", "png" };
-        private void DownloadAndResize(string region, string targetFile)
+        private static readonly string[] Qualities = ["HQ", "M", "S"];
+        private static readonly string[] Extensions = ["jpg", "jpg", "png"];
+        private async Task DownloadAndResize(string region, string targetFile)
         {
             var lastException = new Exception("Unable to download region " + region);
             for (var i = 0; i < Qualities.Length; i++)
@@ -55,8 +56,7 @@ namespace TwilightBoxart.Models
 
                 try
                 {
-                    ImgDownloader.DownloadAndResize(url, targetFile);
-                    return; // Success.
+                    await ImgDownloader.DownloadAndResize(url, targetFile);
                 }
                 catch (Exception e)
                 {

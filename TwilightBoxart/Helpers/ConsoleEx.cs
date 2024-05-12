@@ -66,7 +66,7 @@ namespace KirovAir.Core.ConsoleApp
 
         public static bool YesNoMenu(string question = null, bool reverseOrder = false)
         {
-            var items = reverseOrder ? new[] { "No", "Yes" } : new[] { "Yes", "No" };
+            string[] items = reverseOrder ? ["No", "Yes"] : ["Yes", "No"];
             return Menu(question, null, items) == "Yes";
         }
 

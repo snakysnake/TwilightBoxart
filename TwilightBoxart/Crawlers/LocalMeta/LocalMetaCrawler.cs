@@ -9,17 +9,12 @@ namespace TwilightBoxart.Crawlers.LocalMeta
     /// <summary>
     /// Will create a DB list of local titles to add extra info to the NoIntro DBs. (Title + ID)
     /// </summary>
-    public class LocalMetaCrawler
+    public class LocalMetaCrawler(string dir, string outputFile)
     {
-        private readonly string _dir;
-        private readonly string _outputFile;
-        private int _count;
+        private readonly string _dir = dir;
+        private readonly string _outputFile = outputFile;
 
-        public LocalMetaCrawler(string dir, string outputFile)
-        {
-            _dir = dir;
-            _outputFile = outputFile;
-        }
+        private int _count;
 
         public void Go()
         {
@@ -28,35 +23,31 @@ namespace TwilightBoxart.Crawlers.LocalMeta
                 var ext = Path.GetExtension(romFile).ToLower();
                 if (ext == ".zip")
                 {
-                    using (var fs = File.OpenRead(romFile))
-                    using (var archive = new ZipArchive(fs))
+                    using var fs = File.OpenRead(romFile);
+                    using var archive = new ZipArchive(fs);
+                    var romEntry = archive.Entries.FirstOrDefault(c => BoxartConfig.ExtensionMapping.ContainsKey(Path.GetExtension(c.Name)));
+                    if (romEntry != null)
                     {
-                        var romEntry = archive.Entries.FirstOrDefault(c => BoxartConfig.ExtensionMapping.Keys.Contains(Path.GetExtension(c.Name)));
-                        if (romEntry != null)
+                        using var ms = new MemoryStream();
+                        using var dec = romEntry.Open();
+                        dec.CopyTo(ms);
+                        ms.Seek(0, SeekOrigin.Begin);
+                        try
                         {
-                            using (var ms = new MemoryStream())
-                            using (var dec = romEntry.Open())
-                            {
-                                dec.CopyTo(ms);
-                                ms.Seek(0, SeekOrigin.Begin);
-                                try
-                                {
-                                    var fsRom = Rom.FromStream(ms, romEntry.FullName);
-                                    WriteRom(fsRom);
-                                }
-                                catch (Exception e)
-                                {
-                                    Console.WriteLine("Err with: " + romEntry.FullName);
-                                    WriteErr(romFile, e);
-                                }
-                            }
+                            var fsRom = Rom.FromStream(ms, romEntry.FullName);
+                            WriteRom(fsRom);
                         }
-
-                        continue;
+                        catch (Exception e)
+                        {
+                            Console.WriteLine("Err with: " + romEntry.FullName);
+                            WriteErr(romFile, e);
+                        }
                     }
+
+                    continue;
                 }
 
-                if (!BoxartConfig.ExtensionMapping.Keys.Contains(ext))
+                if (!BoxartConfig.ExtensionMapping.ContainsKey(ext))
                     continue;
 
                 try

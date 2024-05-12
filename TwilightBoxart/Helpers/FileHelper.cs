@@ -8,28 +8,24 @@ namespace KirovAir.Core.Utilities
     {
         public static byte[] Compress(Stream stream)
         {
-            using (var mso = new MemoryStream())
+            using var mso = new MemoryStream();
+            using (var gs = new GZipStream(mso, CompressionMode.Compress))
             {
-                using (var gs = new GZipStream(mso, CompressionMode.Compress))
-                {
-                    stream.CopyTo(gs);
-                }
-                return mso.ToArray();
+                stream.CopyTo(gs);
             }
+            return mso.ToArray();
         }
 
         public static byte[] Decompress(Stream stream)
         {
-            using (var mso = new MemoryStream())
+            using var mso = new MemoryStream();
+            using (var gs = new GZipStream(stream, CompressionMode.Decompress))
             {
-                using (var gs = new GZipStream(stream, CompressionMode.Decompress))
-                {
-                    gs.CopyTo(mso);
-                }
-                return mso.ToArray();
+                gs.CopyTo(mso);
             }
+            return mso.ToArray();
         }
-        
+
         public static string CombineUri(params string[] parts)
         {
             if (parts == null || parts.Length == 0) return string.Empty;

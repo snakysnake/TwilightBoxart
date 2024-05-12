@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Net;
 using KirovAir.Core.Utilities;
 using SixLabors.ImageSharp;
@@ -44,7 +43,7 @@ namespace TwilightBoxart
                 foreach (var romFile in Directory.EnumerateFiles(romsPath, "*.*", SearchOption.AllDirectories))
                 {
                     var ext = Path.GetExtension(romFile).ToLower();
-                    if (!BoxartConfig.ExtensionMapping.Keys.Contains(ext))
+                    if (!BoxartConfig.ExtensionMapping.ContainsKey(ext))
                         continue;
 
                     var targetArtFile = Path.Combine(boxArtPath, Path.GetFileName(romFile) + ".png");
@@ -67,8 +66,8 @@ namespace TwilightBoxart
                         {
                             if (rom.ConsoleType == ConsoleType.SuperNintendoEntertainmentSystem)
                             {
-                                if ((rom.NoIntroName?.ToLower().Contains("(japan)") ?? false) ||
-                                    (rom.SearchName?.ToLower().Contains("(japan)") ?? false))
+                                if ((rom.NoIntroName?.ToLower().Contains("(japan)", StringComparison.OrdinalIgnoreCase) ?? false) ||
+                                    (rom.SearchName?.ToLower().Contains("(japan)", StringComparison.OrdinalIgnoreCase) ?? false))
                                 {
                                     size = new Size(84, 115);
                                 }

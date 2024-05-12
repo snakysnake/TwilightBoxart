@@ -20,7 +20,7 @@ namespace KirovAir.Core.Config
 
             foreach (var keyName in values.AllKeys)
             {
-                var property = properties.FirstOrDefault(c => c.Name.ToLower() == keyName.ToLower());
+                var property = properties.FirstOrDefault(c => c.Name.Equals(keyName, StringComparison.OrdinalIgnoreCase));
                 if (property == null)
                     continue;
 
@@ -49,7 +49,7 @@ namespace KirovAir.Core.Config
                         var list = new List<string>();
                         if (!string.IsNullOrEmpty(value))
                         {
-                            list = value.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(c => c.Trim()).ToList();
+                            list = value.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(c => c.Trim()).ToList();
                         }
 
                         property.SetValue(this, list);

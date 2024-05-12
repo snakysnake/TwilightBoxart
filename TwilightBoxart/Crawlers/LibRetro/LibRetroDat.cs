@@ -59,7 +59,7 @@ namespace TwilightBoxart.Crawlers.LibRetro
             {
                 if (!skip)
                 {
-                    if (split[i].ToLower() == root.ToLower())
+                    if (split[i].Equals(root, StringComparison.OrdinalIgnoreCase))
                     {
                         i += 2;
                         var entity = Activator.CreateInstance<T>();
@@ -116,9 +116,8 @@ namespace TwilightBoxart.Crawlers.LibRetro
                 }
                 else
                 {
-                    var property = properties.FirstOrDefault(c => c.Name.ToLower() == currentKey.ToLower());
-                    if (property != null)
-                        property.SetValue(obj, value);
+                    var property = properties.FirstOrDefault(c => c.Name.Equals(currentKey, StringComparison.OrdinalIgnoreCase));
+                    property?.SetValue(obj, value);
 
                     currentKey = "";
                 }

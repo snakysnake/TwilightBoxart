@@ -20,7 +20,7 @@ namespace TwilightBoxart.CLI
                 config.Load();
             }
             catch { Console.WriteLine("Could not load TwilightBoxart.ini - using defaults."); }
-            
+
             if (string.IsNullOrEmpty(config.SdRoot))
             {
                 var allDrives = new List<DriveInfo>();
@@ -29,7 +29,7 @@ namespace TwilightBoxart.CLI
                     allDrives = DriveInfo.GetDrives().Where(c => c.DriveType == DriveType.Removable).ToList();
                 }
                 catch { }
-                
+
                 var choice = FileHelper.GetCurrentDirectory();
                 if (allDrives.Count > 0)
                 {
@@ -60,7 +60,7 @@ namespace TwilightBoxart.CLI
                 return;
             }
             Console.WriteLine();
-            
+
             var progress = new Progress<string>(Console.WriteLine);
             var crawler = new BoxartCrawler(progress);
             crawler.InitializeDb();
