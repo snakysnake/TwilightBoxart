@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.Compression;
-using System.Reflection;
 
 namespace KirovAir.Core.Utilities
 {
@@ -42,9 +42,9 @@ namespace KirovAir.Core.Utilities
             return res;
         }
 
-        public static string GetCurrentDirectory()
-        {
-            return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-        }
+public static string GetCurrentDirectory()
+{
+    return Path.GetDirectoryName(AppContext.BaseDirectory);
+}
     }
 }
