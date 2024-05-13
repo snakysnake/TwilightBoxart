@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TwilightBoxart.UX
+namespace TwilightBoxart.GUI
 {
     public partial class MainForm : Form
     {

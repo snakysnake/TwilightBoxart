@@ -2,7 +2,7 @@
 using System.Net;
 using System.Windows.Forms;
 
-namespace TwilightBoxart.UX
+namespace TwilightBoxart.GUI
 {
     static class Program
     {

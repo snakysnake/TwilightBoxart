@@ -1,4 +1,4 @@
-﻿namespace TwilightBoxart.UX
+﻿namespace TwilightBoxart.GUI
 {
     partial class MainForm
     {
@@ -52,9 +52,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numHeight)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // btnBrowseSd
-            // 
+            //
             this.btnBrowseSd.Location = new System.Drawing.Point(698, 35);
             this.btnBrowseSd.Margin = new System.Windows.Forms.Padding(4);
             this.btnBrowseSd.Name = "btnBrowseSd";
@@ -63,18 +63,18 @@
             this.btnBrowseSd.Text = "Browse...";
             this.btnBrowseSd.UseVisualStyleBackColor = true;
             this.btnBrowseSd.Click += new System.EventHandler(this.btnBrowseSd_Click);
-            // 
+            //
             // txtSdRoot
-            // 
+            //
             this.txtSdRoot.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtSdRoot.Location = new System.Drawing.Point(12, 46);
             this.txtSdRoot.Margin = new System.Windows.Forms.Padding(4);
             this.txtSdRoot.Name = "txtSdRoot";
             this.txtSdRoot.Size = new System.Drawing.Size(674, 31);
             this.txtSdRoot.TabIndex = 1;
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 17);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -82,9 +82,9 @@
             this.label1.Size = new System.Drawing.Size(252, 25);
             this.label1.TabIndex = 2;
             this.label1.Text = "SD Root / Roms location:";
-            // 
+            //
             // txtLog
-            // 
+            //
             this.txtLog.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtLog.Location = new System.Drawing.Point(11, 278);
             this.txtLog.Margin = new System.Windows.Forms.Padding(6);
@@ -94,9 +94,9 @@
             this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtLog.Size = new System.Drawing.Size(996, 360);
             this.txtLog.TabIndex = 10;
-            // 
+            //
             // txtBoxart
-            // 
+            //
             this.txtBoxart.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtBoxart.Location = new System.Drawing.Point(12, 137);
             this.txtBoxart.Margin = new System.Windows.Forms.Padding(4);
@@ -104,9 +104,9 @@
             this.txtBoxart.ReadOnly = true;
             this.txtBoxart.Size = new System.Drawing.Size(674, 31);
             this.txtBoxart.TabIndex = 4;
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 108);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -114,9 +114,9 @@
             this.label2.Size = new System.Drawing.Size(161, 25);
             this.label2.TabIndex = 5;
             this.label2.Text = "Boxart location:";
-            // 
+            //
             // btnBrowseBoxart
-            // 
+            //
             this.btnBrowseBoxart.Enabled = false;
             this.btnBrowseBoxart.Location = new System.Drawing.Point(698, 125);
             this.btnBrowseBoxart.Margin = new System.Windows.Forms.Padding(4);
@@ -126,9 +126,9 @@
             this.btnBrowseBoxart.Text = "Browse...";
             this.btnBrowseBoxart.UseVisualStyleBackColor = true;
             this.btnBrowseBoxart.Click += new System.EventHandler(this.btnBrowseBoxart_Click);
-            // 
+            //
             // chkManualBoxartLocation
-            // 
+            //
             this.chkManualBoxartLocation.AutoSize = true;
             this.chkManualBoxartLocation.Location = new System.Drawing.Point(860, 137);
             this.chkManualBoxartLocation.Margin = new System.Windows.Forms.Padding(6);
@@ -138,9 +138,9 @@
             this.chkManualBoxartLocation.Text = "Set Manually";
             this.chkManualBoxartLocation.UseVisualStyleBackColor = true;
             this.chkManualBoxartLocation.CheckedChanged += new System.EventHandler(this.chkManualBoxartLocation_CheckedChanged);
-            // 
+            //
             // btnDetect
-            // 
+            //
             this.btnDetect.Location = new System.Drawing.Point(858, 35);
             this.btnDetect.Margin = new System.Windows.Forms.Padding(4);
             this.btnDetect.Name = "btnDetect";
@@ -150,9 +150,9 @@
             this.toolTip.SetToolTip(this.btnDetect, "Will try to detect your (Twilight++) SD card");
             this.btnDetect.UseVisualStyleBackColor = true;
             this.btnDetect.Click += new System.EventHandler(this.btnDetect_Click);
-            // 
+            //
             // btnStart
-            // 
+            //
             this.btnStart.Enabled = false;
             this.btnStart.Location = new System.Drawing.Point(858, 648);
             this.btnStart.Margin = new System.Windows.Forms.Padding(4);
@@ -162,9 +162,9 @@
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
+            //
             // numWidth
-            // 
+            //
             this.numWidth.Location = new System.Drawing.Point(92, 194);
             this.numWidth.Margin = new System.Windows.Forms.Padding(6);
             this.numWidth.Maximum = new decimal(new int[] {
@@ -181,9 +181,9 @@
             0,
             0});
             this.numWidth.Visible = false;
-            // 
+            //
             // numHeight
-            // 
+            //
             this.numHeight.Location = new System.Drawing.Point(332, 194);
             this.numHeight.Margin = new System.Windows.Forms.Padding(6);
             this.numHeight.Maximum = new decimal(new int[] {
@@ -200,9 +200,9 @@
             0,
             0});
             this.numHeight.Visible = false;
-            // 
+            //
             // lblSize2
-            // 
+            //
             this.lblSize2.AutoSize = true;
             this.lblSize2.Location = new System.Drawing.Point(240, 198);
             this.lblSize2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -211,9 +211,9 @@
             this.lblSize2.TabIndex = 13;
             this.lblSize2.Text = "Height:";
             this.lblSize2.Visible = false;
-            // 
+            //
             // lblSize1
-            // 
+            //
             this.lblSize1.AutoSize = true;
             this.lblSize1.Location = new System.Drawing.Point(6, 198);
             this.lblSize1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -222,9 +222,9 @@
             this.lblSize1.TabIndex = 14;
             this.lblSize1.Text = "Width:";
             this.lblSize1.Visible = false;
-            // 
+            //
             // chkBoxartSize
-            // 
+            //
             this.chkBoxartSize.AutoSize = true;
             this.chkBoxartSize.Location = new System.Drawing.Point(698, 196);
             this.chkBoxartSize.Margin = new System.Windows.Forms.Padding(6);
@@ -234,10 +234,10 @@
             this.chkBoxartSize.Text = "Change boxart size";
             this.chkBoxartSize.UseVisualStyleBackColor = true;
             this.chkBoxartSize.CheckedChanged += new System.EventHandler(this.chkBoxartSize_CheckedChanged);
-            // 
+            //
             // btnGithub
-            // 
-            this.btnGithub.BackgroundImage = global::TwilightBoxart.UX.Properties.Resources.GitHub_Mark_64px;
+            //
+            this.btnGithub.BackgroundImage = global::TwilightBoxart.GUI.Properties.Resources.GitHub_Mark_64px;
             this.btnGithub.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnGithub.Location = new System.Drawing.Point(11, 648);
             this.btnGithub.Margin = new System.Windows.Forms.Padding(4);
@@ -247,9 +247,9 @@
             this.toolTip.SetToolTip(this.btnGithub, "Visit the Github Repository.");
             this.btnGithub.UseVisualStyleBackColor = true;
             this.btnGithub.Click += new System.EventHandler(this.btnGithub_Click);
-            // 
+            //
             // chkAspectRatio
-            // 
+            //
             this.chkAspectRatio.AutoSize = true;
             this.chkAspectRatio.Location = new System.Drawing.Point(698, 237);
             this.chkAspectRatio.Margin = new System.Windows.Forms.Padding(6);
@@ -259,9 +259,9 @@
             this.chkAspectRatio.Text = "Adjust to correct aspect ratio";
             this.toolTip.SetToolTip(this.chkAspectRatio, "Will resize the boxart to TwilightMenu++ compatible aspect ratio\'s");
             this.chkAspectRatio.UseVisualStyleBackColor = true;
-            // 
+            //
             // MainForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 723);
@@ -320,4 +320,3 @@
         private System.Windows.Forms.CheckBox chkAspectRatio;
     }
 }
-
