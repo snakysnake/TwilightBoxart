@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Project>
+    <PropertyGroup>
+        <DebugType>embedded</DebugType>
+        <Deterministic>true</Deterministic>
+        <AssemblyVersion>0.8.1</AssemblyVersion>
+        <AssemblyFileVersion>0.8.1</AssemblyFileVersion>
+    </PropertyGroup>
+</Project>

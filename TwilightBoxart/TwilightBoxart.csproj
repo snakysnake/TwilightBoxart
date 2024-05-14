@@ -2,8 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <DebugType>embedded</DebugType>
-    <Deterministic>true</Deterministic>
   </PropertyGroup>
 
   <ItemGroup>

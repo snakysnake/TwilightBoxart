@@ -128,7 +128,7 @@ namespace TwilightBoxart.Models.Base
             return FromStream(fs, filename);
         }
 
-        public virtual async Task DownloadBoxArt(string targetFile)
+        public virtual Task DownloadBoxArt(string targetFile)
         {
             throw new NotImplementedException();
         }

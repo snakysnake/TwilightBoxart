@@ -1,22 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <DebugType>embedded</DebugType>
-    <Deterministic>true</Deterministic>
     <UseWindowsForms>true</UseWindowsForms>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
+
   <PropertyGroup>
     <ApplicationIcon>Starvingartist-Antiseptic-Videogame-Nintendo-ds-lite.ico</ApplicationIcon>
   </PropertyGroup>
+
   <PropertyGroup>
     <ApplicationManifest>TwilightBoxart.manifest</ApplicationManifest>
   </PropertyGroup>
+
   <ItemGroup>
     <Content Include="Starvingartist-Antiseptic-Videogame-Nintendo-ds-lite.ico" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\TwilightBoxart\TwilightBoxart.csproj" />
   </ItemGroup>
+
 </Project>
