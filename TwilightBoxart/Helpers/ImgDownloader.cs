@@ -6,6 +6,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
+using TwilightBoxart.Models.Base;
 
 namespace TwilightBoxart.Helpers
 {
@@ -29,6 +30,8 @@ namespace TwilightBoxart.Helpers
 
                 var encoder = GetEncoder(image, targetFile);
                 image.Save(targetFile, encoder);
+            } else {
+                throw new CoverArtNotFoundException("Cover art not found.");
             }
         }
 

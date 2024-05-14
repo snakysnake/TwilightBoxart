@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using KirovAir.Core.Utilities;
 using SixLabors.ImageSharp;
 using TwilightBoxart.Data;
@@ -28,75 +29,78 @@ namespace TwilightBoxart
             _romDb.Initialize(_progress);
         }
 
-        public void DownloadArt(string romsPath, string boxArtPath, int defaultWidth, int defaultHeight, bool useAspect = false)
+    public async Task DownloadArt(string romsPath, string boxArtPath, int defaultWidth, int defaultHeight, bool useAspect = false)
+    {
+        _progress?.Report($"Scanning {romsPath}..");
+
+        try
         {
-            _progress?.Report($"Scanning {romsPath}..");
-
-            try
+            if (!Directory.Exists(romsPath))
             {
-                if (!Directory.Exists(romsPath))
+                _progress?.Report($"Could not open {romsPath}.");
+                return;
+            }
+
+            foreach (var romFile in Directory.EnumerateFiles(romsPath, "*.*", SearchOption.AllDirectories))
+            {
+                var ext = Path.GetExtension(romFile).ToLower();
+                if (!BoxartConfig.ExtensionMapping.ContainsKey(ext))
+                    continue;
+
+                var targetArtFile = Path.Combine(boxArtPath, Path.GetFileName(romFile) + ".png");
+                if (File.Exists(targetArtFile))
                 {
-                    _progress?.Report($"Could not open {romsPath}.");
-                    return;
+                    // We already have it.
+                    _progress?.Report($"Skipping {Path.GetFileName(romFile)}.. (We already have it)");
+                    continue;
                 }
 
-                foreach (var romFile in Directory.EnumerateFiles(romsPath, "*.*", SearchOption.AllDirectories))
+                try
                 {
-                    var ext = Path.GetExtension(romFile).ToLower();
-                    if (!BoxartConfig.ExtensionMapping.ContainsKey(ext))
-                        continue;
+                    _progress?.Report($"Searching art for {Path.GetFileName(romFile)}.. ");
 
-                    var targetArtFile = Path.Combine(boxArtPath, Path.GetFileName(romFile) + ".png");
-                    if (File.Exists(targetArtFile))
+                    var rom = Rom.FromFile(romFile);
+                    _romDb.AddMetadata(rom);
+
+                    var downloader = new ImgDownloader(defaultWidth, defaultHeight);
+                    if (useAspect && BoxartConfig.AspectRatioMapping.TryGetValue(rom.ConsoleType, out var size))
                     {
-                        // We already have it.
-                        _progress?.Report($"Skipping {Path.GetFileName(romFile)}.. (We already have it)");
-                        continue;
-                    }
-
-                    try
-                    {
-                        _progress?.Report($"Searching art for {Path.GetFileName(romFile)}.. ");
-
-                        var rom = Rom.FromFile(romFile);
-                        _romDb.AddMetadata(rom);
-
-                        var downloader = new ImgDownloader(defaultWidth, defaultHeight);
-                        if (useAspect && BoxartConfig.AspectRatioMapping.TryGetValue(rom.ConsoleType, out var size))
+                        if (rom.ConsoleType == ConsoleType.SuperNintendoEntertainmentSystem)
                         {
-                            if (rom.ConsoleType == ConsoleType.SuperNintendoEntertainmentSystem)
+                            if ((rom.NoIntroName?.ToLower().Contains("(japan)", StringComparison.OrdinalIgnoreCase) ?? false) ||
+                                (rom.SearchName?.ToLower().Contains("(japan)", StringComparison.OrdinalIgnoreCase) ?? false))
                             {
-                                if ((rom.NoIntroName?.ToLower().Contains("(japan)", StringComparison.OrdinalIgnoreCase) ?? false) ||
-                                    (rom.SearchName?.ToLower().Contains("(japan)", StringComparison.OrdinalIgnoreCase) ?? false))
-                                {
-                                    size = new Size(84, 115);
-                                }
+                                size = new Size(84, 115);
                             }
-                            downloader.SetSizeAdjustedToAspectRatio(size);
                         }
+                        downloader.SetSizeAdjustedToAspectRatio(size);
+                    }
 
-                        rom.SetDownloader(downloader);
+                    rom.SetDownloader(downloader);
 
-                        Directory.CreateDirectory(Path.GetDirectoryName(targetArtFile));
-                        rom.DownloadBoxArt(targetArtFile);
-                        _progress?.Report("Got it!");
-                    }
-                    catch (NoMatchException ex)
-                    {
-                        _progress?.Report(ex.Message);
-                    }
-                    catch (Exception e)
-                    {
-                        _progress?.Report("Something bad happened: " + e.Message);
-                    }
+                    Directory.CreateDirectory(Path.GetDirectoryName(targetArtFile));
+                    await rom.DownloadBoxArt(targetArtFile);
+                    _progress?.Report("Got it!");
                 }
+                catch (NoMatchException ex)
+                {
+                    _progress?.Report(ex.Message);
+                }
+                catch (CoverArtNotFoundException ex) {
+                    _progress?.Report(ex.Message);
+                }
+                catch (Exception e)
+                {
+                    _progress?.Report("Something bad happened: " + e.Message);
+                }
+            }
 
-                _progress?.Report("Finished scan.");
-            }
-            catch (Exception e)
-            {
-                _progress?.Report("Unhandled exception occured! " + e);
-            }
+            _progress?.Report("Finished scan.");
+        }
+        catch (Exception e)
+        {
+            _progress?.Report("Unhandled exception occured! " + e);
         }
     }
+}
 }

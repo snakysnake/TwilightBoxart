@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using KirovAir.Core.ConsoleApp;
 using KirovAir.Core.Utilities;
 
@@ -9,7 +10,7 @@ namespace TwilightBoxart.CLI
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             ConsoleEx.WriteGreenLine(BoxartConfig.Credits);
             Console.WriteLine();
@@ -64,7 +65,7 @@ namespace TwilightBoxart.CLI
             var progress = new Progress<string>(Console.WriteLine);
             var crawler = new BoxartCrawler(progress);
             crawler.InitializeDb();
-            crawler.DownloadArt(config.SdRoot, boxArtPath, config.BoxartWidth, config.BoxartHeight, config.AdjustAspectRatio);
+            await crawler.DownloadArt(config.SdRoot, boxArtPath, config.BoxartWidth, config.BoxartHeight, config.AdjustAspectRatio);
         }
 
         // Todo: Implement as CLI and add Progress<> to MetaCrawler.
