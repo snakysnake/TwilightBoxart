@@ -11,7 +11,7 @@ namespace TwilightBoxart.Crawlers.LibRetro
         private static readonly HttpClient Client = new();
         public static async Task<List<LibRetroRomData>> DownloadDat(string url)
         {
-            HttpResponseMessage response = await Client.GetAsync(url);
+            HttpResponseMessage response = (await Client.GetAsync(url)).EnsureSuccessStatusCode();
 
             string data = await response.Content.ReadAsStringAsync();
             return ParseDat<LibRetroRomData>(data, "game");

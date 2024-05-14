@@ -19,20 +19,15 @@ namespace TwilightBoxart.Helpers
 
         public async Task DownloadAndResize(string url, string targetFile)
         {
-            HttpResponseMessage response = await Client.GetAsync(url);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                Stream data = await response.Content.ReadAsStreamAsync();
+            HttpResponseMessage response = (await Client.GetAsync(url)).EnsureSuccessStatusCode();
+            Stream data = await response.Content.ReadAsStreamAsync();
 
-                var image = Image.Load(data);
-                image.Metadata.ExifProfile = null;
-                image.Mutate(x => x.Resize(_width, _height));
+            var image = Image.Load(data);
+            image.Metadata.ExifProfile = null;
+            image.Mutate(x => x.Resize(_width, _height));
 
-                var encoder = GetEncoder(image, targetFile);
-                image.Save(targetFile, encoder);
-            } else {
-                throw new CoverArtNotFoundException("Cover art not found.");
-            }
+            var encoder = GetEncoder(image, targetFile);
+            image.Save(targetFile, encoder);
         }
 
         private static IImageEncoder GetEncoder(Image image, string targetFile)

@@ -86,9 +86,6 @@ namespace TwilightBoxart
                 {
                     _progress?.Report(ex.Message);
                 }
-                catch (CoverArtNotFoundException ex) {
-                    _progress?.Report(ex.Message);
-                }
                 catch (Exception e)
                 {
                     _progress?.Report("Something bad happened: " + e.Message);
