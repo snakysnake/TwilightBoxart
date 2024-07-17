@@ -13,7 +13,7 @@ namespace TwilightBoxart.GUI
         private readonly BoxartCrawler _crawler;
         private bool _isInitialized;
         private bool _isRunning;
-        private readonly BoxartConfig _config = new BoxartConfig();
+        private readonly BoxartConfig _config = new();
 
         public MainForm()
         {
@@ -61,9 +61,9 @@ namespace TwilightBoxart.GUI
             this.UIThread(() => txtLog.AppendText($"{DateTime.Now:HH:mm:ss} - {text}{Environment.NewLine}"));
         }
 
-        private void Go()
+        private async Task Go()
         {
-            _crawler.DownloadArt(txtSdRoot.Text, txtBoxart.Text, (int)numWidth.Value, (int)numHeight.Value, chkAspectRatio.Checked);
+            await _crawler.DownloadArt(txtSdRoot.Text, txtBoxart.Text, (int)numWidth.Value, (int)numHeight.Value, chkAspectRatio.Checked);
             _isRunning = false;
             this.UIThread(SetUx);
         }
