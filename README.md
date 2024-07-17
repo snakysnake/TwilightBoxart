@@ -1,7 +1,18 @@
 ﻿﻿![Screenshot](https://github.com/KirovAir/TwilightBoxart/raw/master/img/screenshot.png)
 
 # Twilight Boxart
-A boxart downloader written in C#. Uses various sources and scan methods to determine the correct boxart. 
+
+**PROJECT IN MAINTENANCE-MODE**
+
+More info below:
+
+> This project has been forked with the goal of porting from old unsupported .NET Core (making it not work on Linux due to outdated OpenSSL support) to currently supported .NET (both on Windows, MacOS and Linux).
+>
+> No features are planned aside from keeping it working and cleaning some unused code.
+>
+> Supported OSes are the same as supported by .NET 8.0.
+
+A boxart downloader written in C#. Uses various sources and scan methods to determine the correct boxart.
 Written for [TwilightMenu++](https://github.com/DS-Homebrew/TWiLightMenu) but can be used for other loader UI's with some config changes. 😊
 
 ## Supported rom types
@@ -25,8 +36,4 @@ Written for [TwilightMenu++](https://github.com/DS-Homebrew/TWiLightMenu) but ca
 * [LibRetro](https://github.com/libretro/libretro-thumbnails) using [NoIntro](https://datomatic.no-intro.org) sha1 matching or simply filename matching. [LibRetro DAT](https://github.com/libretro/libretro-database/tree/master/dat) is currently added as extra NES sha1 source.
 
 ## Download
-[Here](https://github.com/KirovAir/TwilightBoxart/releases).
-
-## To-do
-* Add support for more consoles. (redump.org as disc source)
-* Prefilled config support for different loaders. (RetroArch, Wii etc.)
+[Here](https://github.com/MateusRodCosta/TwilightBoxart/releases).
