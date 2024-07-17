@@ -5,14 +5,17 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>
 
   <PropertyGroup>
     <ApplicationIcon>Starvingartist-Antiseptic-Videogame-Nintendo-ds-lite.ico</ApplicationIcon>
+    <ApplicationManifest>TwilightBoxart.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <PropertyGroup>
-    <ApplicationManifest>TwilightBoxart.manifest</ApplicationManifest>
+    <Title>TwilightBoxArt (GUI)</Title>
+    <Description>TwilightBoxArt: TwilightMenu++ Boxart Downloader (WinForms UI)</Description>
   </PropertyGroup>
 
   <ItemGroup>

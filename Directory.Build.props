@@ -1,9 +1,15 @@
 <?xml version="1.0"?>
 <Project>
     <PropertyGroup>
+        <Platform>x64</Platform>
         <DebugType>embedded</DebugType>
         <Deterministic>true</Deterministic>
-        <AssemblyVersion>0.8.1</AssemblyVersion>
-        <AssemblyFileVersion>0.8.1</AssemblyFileVersion>
+    </PropertyGroup>
+    <PropertyGroup>
+        <Title>TwilightBoxArt</Title>
+        <Description>TwilightBoxArt: TwilightMenu++ Boxart Downloader</Description>
+        <Version>0.8.1.0</Version>
+        <Authors>MateusRodCosta, built on original work by KirovAir</Authors>
+        <ProjectUrl>https://github.com/MateusRodCosta/TwilightBoxart</ProjectUrl>
     </PropertyGroup>
 </Project>
